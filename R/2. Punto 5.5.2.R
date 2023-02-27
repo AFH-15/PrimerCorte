@@ -1,6 +1,3 @@
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 # 5.5.2.
 # Item 1:
 # Actualmente dep_timey sched_dep_time son convenientes a la vista, pero difíciles
@@ -37,30 +34,3 @@ ggplot(flights_airtime, aes(x = air_time_diff)) + geom_histogram(binwidth = 1)
 #> Que hacer para repararlo
 ggplot(filter(flights_airtime, dest == "LAX"), aes(x = air_time_diff)) +
   geom_histogram(binwidth = 1)
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-#  5.6.7
-#  item 2
-#
-
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-#  5.7.1
-#  item 2
-#  ¿Qué avión ( tailnum) tiene el peor récord de puntualidad?
-
-library(nycflights13)
-library(tidyverse)
-
-flights %>%
-  filter(!is.na(arr_delay)) %>%
-  group_by(tailnum)%>%
-  summarise(arr_delay = mean(arr_delay), n = n()) %>%
-  filter(n >= 20) %>%
-  filter(min_rank(desc(arr_delay)) == 1)
-
-

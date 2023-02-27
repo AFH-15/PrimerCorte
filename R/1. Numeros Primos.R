@@ -4,7 +4,7 @@
 #'
 #' @param Impresion
 #' @param ControlImpresion
-#'
+#' @param Modulo
 #'
 #' @returns returns integer values
 #'

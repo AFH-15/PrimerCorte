@@ -11,7 +11,7 @@ An object of class \code{logical} of length 1.
 Impresion
 }
 \arguments{
-\item{ControlImpresion}{}
+\item{Modulo}{}
 }
 \value{
 returns integer values

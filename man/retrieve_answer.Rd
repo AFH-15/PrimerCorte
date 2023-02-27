@@ -17,6 +17,6 @@ Imprime los resultados de la guia de exploración de R
 para ciencia de datos dependiendo del numero que coloques
 }
 \examples{
-Retrieve_answer(2)
-Retrieve_answer(2) [1] 1
+Retrieve_answer(1)
+Retrieve_answer(6)
 }

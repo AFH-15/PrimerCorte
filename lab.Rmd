@@ -1,0 +1,460 @@
+---
+title: "Taller primer corte"
+author: "Andrés Hernández código: 9563, Andrés Leonardo Mendoza Chunza código: 86204, David Eduardo Martinez Agudelo código: 81639, Jaime Alberto Gonzalez Vargas código: 33236, Juan Sebastian Rodriguez Padilla código: 92699"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**NÚMEROS PRIMOS**
+
+El siguiente código identifica y muestra los números primos del 1 al 100.
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+modulo<-0
+impresion<-F
+controlImpresion<-T
+for(números in 3:100){
+  for(denominador in 2:50){
+    modulo<-números%%denominador
+    if(modulo!=0){
+      impresion<-T
+    }
+    else{
+      impresion<-F
+      break
+    }
+    if(denominador==(números-1)){
+      break
+    }
+  }
+  
+  if(controlImpresion==T){
+    print(1)
+    print(2)
+    controlImpresion<-F
+  }
+  if(impresion==T){
+    print(números)
+  }
+}
+```
+
+Primero creamos las variables
+
+Modulo: Es tipo numérica, la utilizamos para identificar si el número solo es divisible. entre el mismo y el número 1.
+
+Impresión:  Es tipo boolean, permite imprimir el número solo si es primo.
+
+controlImpresion: Es tipo boolean, permite imprimir solo una vez los números 1 y 2.
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+modulo<-0 
+impresion<-F 
+controlImpresion<-T
+```
+
+Tenemos dos ciclos FOR anidados el principal incrementamos la variable números desde el número 3 hasta el número 100 y el FOR anidado se encarga de recorrer la variable denominador desde el número 2 hasta número el 50.
+
+Dentro del cilclo For anidado realizamos la operación modulo entre las variables numeros y denominador esta operación nos permite saber si el número es divisible por un número diferente de el mismo y uno, si el número es divisible por un número diferente nos da como resultado 0 y si el número es divisible por el mismo y por uno nos entrega un 1.
+
+Luego tenemos la estructura de control IF ELSE con la variable modulo si modulo es 1 la variable impresión es T y permite imprimir el número que estamos analizando pero si en alguno de los ciclos de la variable denominador nos da que el modulo es 0 la variable impresión ahora es F y con la instrucción break rompemos el ciclo anidado para que no siga contando y así disminuimos los tiempos de ejecución.
+
+También tenemos una estructura IF que permite sacar al ciclo FOR anidado cuando la variable denominador alcanza el valor de la variable numero menos uno.
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+for(números in 3:100){
+  for(denominador in 2:50){
+    modulo<-números%%denominador
+    if(modulo!=0){
+      impresion<-T
+    }
+    else{
+      impresion<-F
+      break
+    }
+    if(denominador==(números-1)){
+      break
+    }
+  }
+}
+```
+
+Por ultimo tenemos la parte de la impresión esta ubicada en el FOR principal en el primer IF preguntamos si la variable controlImpresion es T si se cumple esta condición imprime los números 1 y 2 luego iguala la variable controlImpresion a F lo que causa que se bloquee y no vuelva a entrar en esa condición mientras se ejecuta el programa, luego tenemos el IF que permite imprimir los números primos si la variable impresión es T y se ejecuta con cada iteración del ciclo FOR principal.
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+if(controlImpresion==T){
+    print(1)
+    print(2)
+    controlImpresion<-F
+  }
+  if(impresion==T){
+    print(numeros)
+  }
+```
+
+**EJERCICIOS DE TRANSFORMACION**
+
+**Punto 5.2.4**
+
+Instalamos las librerias nycflights13 que nos permite acceder a la informacion de los vuelos y tidyverse que permite analizar la informacion.
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+```
+
+1.  Encuentra los vuelos que cumplan las condiciones.
+
+Creamos una variable llamada P1 y le asignamos los valores del dataset flights y realizamos los filtros correspondientes.
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+
+
+P1<-flights
+P1<-flights%>%
+  filter(arr_delay>=2                     #Pto 1, ud. hora
+         ,dest=="HOU"|dest=="IAH"         #Pto 2,
+         ,carrier %in% c("UA","DL","AA")  #Pto 3,* 
+         ,month>=7&month<=9               #Pto 4,
+         ,dep_delay<=0,arr_time>=120      #Pto 5, ud. minutos
+         ,dep_time>=60,air_time>=30       #Pto 6, ud. minutos *
+         ,hour>=0, hour<=6)               #Pto 7, 
+
+```
+
+Y obtenemos como resultado 17 objetos
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+
+P1<-flights
+P1<-flights%>%
+  filter(arr_delay>=2                     #Pto 1, ud. hora
+         ,dest=="HOU"|dest=="IAH"         #Pto 2,
+         ,carrier %in% c("UA","DL","AA")  #Pto 3,* 
+         ,month>=7&month<=9               #Pto 4,
+         ,dep_delay<=0,arr_time>=120      #Pto 5, ud. minutos
+         ,dep_time>=60,air_time>=30       #Pto 6, ud. minutos *
+         ,hour>=0, hour<=6)               #Pto 7, 
+print(P1)
+```
+
+![](TABLA.png){width="7249"}
+
+2.  ¿Para que sirve between()?
+
+Es una función que permite filtrar valores en un rango especifico la estructura que maneja es la siguiente x \>= letf & x\<= right se usa between(x,left,right) utilizando la estructura podemos identificar que el límite inferior lo ubicamos en la left y el límite superior en right.
+
+Information tomada de la documentation de R con el menu de ayuda.
+
+¿Puedes usarlo para simplificar el código necesario para responder a los desafíos anteriores?
+
+Si. podemos usar between() en los puntos 4 y 7 donde tenemos variables del tipo numérica que debemos filtrar en un rango de valores.
+
+```{r}
+library(nycflights13)
+library(tidyverse)
+P2<-flights
+P2<-flights%>%
+  filter(arr_delay>=2                 #Pto 1, ud. hora
+         ,dest=="HOU"|dest=="IAH"     #Pto 2
+         ,carrier %in% c("UA","DL","AA") #Pto 3 **
+         ,between(month,7,9)          #Pto 4  
+         ,dep_delay<=0,arr_time>=120   #Pto 5 ud. minutos
+         ,dep_time>=60,air_time>=30   #Pto 6 ud. minutos
+         ,between(hour,0,6))          #Pto 7, 
+
+```
+
+**PUNTO 5.3.1**
+
+1.  ¿Cómo podrías usar arrange() para ordenar todos los valores faltantes desede el principio?
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+P4.1<-arrange(flights,desc(is.na(dep_time)),dep_time) 
+
+```
+
+![](faltantes.png)
+
+2. Ordenar flights para encontrar los vuelos más retrasados y los vuelos que salieron antes.
+
+Vuelos más retrasados
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+P4.2<-arrange(flights,desc(dep_delay))
+```
+
+Relacion de los vuelos más retrasados
+
+![](vuelosRetrasados.png)
+
+Vuelos que salieron antes
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+P4.3<-arrange(flights,dep_delay)
+```
+
+Relacion de los vuelos que salieron antes.
+
+![](vuelosAntes.png)
+
+3\. Ordenar flights para encontrar los vuelos más rápidos (velocidad más alta).
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+
+P4.4<-head(arrange(flights,desc(distance/air_time)))
+```
+
+Vuelos más rápidos
+
+![](mayorV.png)
+
+4.  ¿Qué vuelos viajaron más lejos?
+
+    ```{r echo=TRUE,message=FALSE, warning=FALSE}
+    library(nycflights13)
+    library(tidyverse)
+
+    P4.5<-arrange(flights, desc(distance))
+    ```
+
+    Vuelos que vijaron más lejos
+
+    ![](masLejos.png)
+
+    ¿Cuál viajó menos?
+
+    ```{r echo=TRUE,message=FALSE, warning=FALSE}
+    library(nycflights13)
+    library(tidyverse) 
+    P4.6<-arrange(flights,distance)
+    ```
+
+Vuelos que viajaron menos
+
+![](menorDistancia.png)
+
+**PUNTO 5.4.1**
+
+2.¿Qué sucede si incluye el nombre de una variable varias veces en una llamada select()?
+
+Si se incluye el nombre de la variable varias veces en select solo selecciona una vez la variable como lo podemos observar en la tabla.
+Information tomada de la documentation de R con el menu de ayuda.
+
+```{r echo=TRUE,message=TRUE, warning=FALSE}
+library(knitr)
+P3<-flights%>%
+  select(day,day,day)
+kable(head(P3))
+```
+
+3.  ¿Que función tiene any_of()?
+
+    any_of se utiliza para eliminar variables de un vector.
+
+4.  ¿El resultado de ejecutar el código te soprende?
+
+    Lo sorprendente de la función "contains" es que tiene la posibilidad de interpretar los datos ingresados independientemente de si son con letras mayusculas o minusculas, en este caso particular selecciona todas las columnas que contengan la palabra "time" asi se ingrese con letras mayusculas.
+
+    ¿cómo tratan los ayudantes selecotos el caso de forma predeterminada?
+
+    Programando de manera que todas las variables se nombren con letras minusculas y evitando combinaciones.
+
+    ¿Cómo se puede cambiar ese valor predeterminado?
+
+    Para poder correguir este valor predeterminado se puede agregar una condicion a la sentencia ingresada ignore.case=FALSE. de esta manera solo mostrara los valores que cumplan las dos condiciones.
+
+    ```{r echo=TRUE,message=FALSE, warning=FALSE}
+    select(flights,contains("TIME,ignore.case=FALSE"))
+
+    ```
+
+**PUNTO 5.5.2**
+
+1.Actualmente dep_timey sched_dep_time son convenientes a la vista, pero difíciles de calcular porque en realidad no son números continuos. Conviértalos a una representación más conveniente de la cantidad de minutos desde la medianoche.
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+flights_times <- mutate(flights, dep_time_mins = (
+  dep_time %/% 100*60 + dep_time %% 100) %% 1440, sched_dep_time_mins = (
+  sched_dep_time %% 100 * 60 + sched_dep_time %% 100) %% 1440)
+
+select(flights_times, dep_time, dep_time_mins, sched_dep_time, sched_dep_time_mins)
+```
+
+2\. Comparar air_time con arr_time -dep_time.
+
+**Comparacion**
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+#> Comparacion
+flights_airtime <- mutate(flights,
+                    dep_time = (dep_time %/% 100 * 60 + dep_time %% 100) %% 144,
+                  arr_time = (arr_time %/% 100 * 60 + arr_time %% 100) %% 1440,
+                              air_time_diff = air_time - arr_time + dep_time)
+nrow(filter(flights_airtime, air_time_diff != 0))
+```
+
+¿Que esperas ver?
+
+```{r}{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+ggplot(flights_airtime, aes(x = air_time_diff)) + geom_histogram(binwidth = 1)
+```
+
+¿Que ves?
+
+¿Qué necesitas hacer para arreglarlo?
+
+```{r}{r echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+ggplot(filter(flights_airtime, dest == "LAX"), aes(x = air_time_diff)) +
+                          geom_histogram(binwidth = 1)
+
+```
+
+**PUNTO 5.6.7**
+
+Haga una lluvia de ideas sobre al menos 5 formas diferentes de evaluar las características tipicas de un retraso de un grupo de vuelos.
+
+1.  Analicis de los tiempos de mantenimiento de los aviones para garantizar la disponibilidad.
+
+2.  Sincronizar los tiempos de carrier para la salida a plataforma.
+
+3.  Garantizar que el taxeo se sincronice con el rodaje a pista para tener disponibilidad de rampa.
+
+4.  Es muy comun la demora o retraso de un vuelo cuando se encuentran FOD en pista (son materiales o piezas desprendidas) que podrian ocacionar un accidente.
+
+5.  Incluir un tiempo de limpieza de pista y almacenar los tiempos para tener una trazabilidad de estos tiempos.
+
+    ¿Que es mas importante el retraso en la llegada o en la salida?
+
+    Se debe considerar desde que posicion se contempla, para la aerolinea es mas beneficioso un retraso en la llegada ya que da tiempo a trabajo en pista para planeacion de despegue de otras rutas evitando la congestion de flota, pero para un pasajero puede representar mayores problemas y costos una llegada tarde esto porque se puede alterar cronogramas de viaje y posibles sobre costos.
+
+**PUNTO 5.7.1**
+
+2.  ¿Que avión (tailnum) tiene el peor récord  de puntualidad?
+
+```{r echo=TRUE,message=FALSE, warning=FALSE}
+library(knitr)
+avion<-flights %>%
+  filter(!is.na(arr_delay)) %>%
+  group_by(tailnum)%>%
+  summarise(arr_delay = mean(arr_delay), n = n()) %>%
+  filter(n >= 20) %>%
+  filter(min_rank(desc(arr_delay)) == 1)
+kable(head(avion))
+```
+
+El avión con el peor récord  de puntualidad es:
+
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+library(knitr)
+avion<-flights %>%
+  filter(!is.na(arr_delay)) %>%
+  group_by(tailnum)%>%
+  summarise(arr_delay = mean(arr_delay), n = n()) %>%
+  filter(n >= 20) %>%
+  filter(min_rank(desc(arr_delay)) == 1)
+kable(head(avion))
+```
+
+**Reporte con Rmarkdown**
+
+Ejercicio tomado del punto 5.3.1
+1.	¿Cómo podrías usar arrange() para ordenar todos los valores faltantes desede el principio?
+
+vamos a ejecutar el siguiente código para poder observar lo que realiza el parámetro include=FALSE 
+
+{r  include=FALSE, echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+library(knitr)
+P4.1<-arrange(flights,desc(is.na(dep_time)),dep_time)
+kable(head(P4.1))
+
+Cómo podemos observar evita la visualización del código y los resultados en el documento final.
+```{r  include=FALSE, echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+library(knitr)
+P4.1<-arrange(flights,desc(is.na(dep_time)),dep_time)
+kable(head(P4.1))
+```
+Ahora vamos a generar el documento final con include=TRUE el cual permite la visualización del código en el documento final como lo vemos a continuación.
+```{r  include=TRUE, echo=TRUE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+library(knitr)
+P4.1<-arrange(flights,desc(is.na(dep_time)),dep_time)
+kable(head(P4.1))
+```
+
+
+Ejercicio tomado del punto 5.7.1 PUNTO 
+2.	¿Qué avión (tailnum) tiene el peor récord de puntualidad?
+vamos a generar el documento con el comando echo=FALSE.
+
+{r echo=FALSE,message=FALSE, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+library(knitr)
+avion<-flights %>%
+  filter(!is.na(arr_delay)) %>%
+  group_by(tailnum)%>%
+  summarise(arr_delay = mean(arr_delay), n = n()) %>%
+  filter(n >= 20) %>%
+  filter(min_rank(desc(arr_delay)) == 1)
+kable(head(avion))
+
+Como podemos observar solo nos muestra el resultado del código.
+
+```{r echo=FALSE,message=TRUE, warning=TRUE}
+library(nycflights13)
+library(tidyverse)
+library(knitr)
+avion<-flights %>%
+  filter(!is.na(arr_delay)) %>%
+  group_by(tailnum)%>%
+  summarise(arr_delay = mean(arr_delay), n = n()) %>%
+  filter(n >= 20) %>%
+  filter(min_rank(desc(arr_delay)) == 1)
+kable(head(avion))
+```
+Ahora cambiamos echo=TRUE y al generar el documento final podemos visualizar el código y el resultado del programa.
+```{r echo=TRUE,message=TRUE, warning=TRUE}
+library(nycflights13)
+library(tidyverse)
+library(knitr)
+avion<-flights %>%
+  filter(!is.na(arr_delay)) %>%
+  group_by(tailnum)%>%
+  summarise(arr_delay = mean(arr_delay), n = n()) %>%
+  filter(n >= 20) %>%
+  filter(min_rank(desc(arr_delay)) == 1)
+kable(head(avion))
+```
+```
+
+**GitHub, - R packages**
+
+Enlace de GitHub https://github.com/AFH-15/PrimerCorte/tree/main/R

@@ -1,11 +1,24 @@
-Package: PrimerCorte
+Package: Comunication
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Solution of R exploration and application guide for data science
+Version: 1.0.0
+Author: 
+  person ("Andrés", "Hernandez", email="andresf.hernandezm@ecci.edu.co",
+  role= c(aut,"create")).
+  person ("Jaime", "Gonzales",
+  role= c(aut,"create")).
+  person ("Sebastian", "Rodriguez",
+  role= c(aut,"create")).
+  person ("David", "Martinez",
+  role= c(aut,"create")).
+  person ("Andres", "Mendoza",
+  role= c(aut,"create")).
+Maintainer: Andrés Hernandez <andresf.hernandezm@ecci.edu.co>
+Description: This project provides a solution to the problems raised in 
+  the guide for the exploration and application of R for data science, 
+  making use of different tools of this language, reports with 
+  Rmarkdawn and Githud.
+License: License free.
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.2.3
